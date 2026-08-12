@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="referrer" content="no-referrer" />
+<title>CarPlay</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    overflow: hidden;
+  }
+
+  #frame {
+    position: fixed;
+    top: 0;
+    left: 0;
+    border: 0;
+    display: block;
+    transform-origin: 0 0;
+  }
+</style>
+</head>
+<body>
+  <iframe
+    id="frame"
+    src="https://tespush.com"
+    allow="autoplay; fullscreen"
+    allowfullscreen
+    scrolling="no"
+  ></iframe>
+
+<script>
+  // Layout size the inner page needs. Too small here = cropped edges.
+  const SOURCE_W = 1920;
+  const SOURCE_H = 1080;
+
+  const frame = document.getElementById('frame');
+  if (!frame) throw new Error('#frame missing');
+
+  frame.style.width = SOURCE_W + 'px';
+  frame.style.height = SOURCE_H + 'px';
+
+  function fit() {
+    const vw = document.documentElement.clientWidth;
+    const vh = document.documentElement.clientHeight;
+
+    const sx = vw / SOURCE_W;
+    const sy = vh / SOURCE_H;
+
+    frame.style.transform = 'scale(' + sx + ', ' + sy + ')';
+  }
+
+  window.addEventListener('resize', fit);
+  window.addEventListener('orientationchange', fit);
+  fit();
+</script>
+</body>
+</html>
